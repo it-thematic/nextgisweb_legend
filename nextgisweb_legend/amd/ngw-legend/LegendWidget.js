@@ -6,7 +6,7 @@ define([
     "dijit/_TemplatedMixin",
     "dijit/_WidgetsInTemplateMixin",
     "dijit/layout/ContentPane",
-    "ngw-pyramid/i18n!qgis",
+    "ngw-pyramid/i18n!legend",
     "ngw-pyramid/hbs-i18n",
     "ngw-resource/serialize",
     // resource

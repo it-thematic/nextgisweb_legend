@@ -18,7 +18,7 @@ def description_file(request):
     fn = env.file_storage.filename(request.context.description_fileobj)
 
     response = FileResponse(fn, request=request)
-    response.content_disposition = (b'attachment; filename=%d.qml'
+    response.content_disposition = (b'attachment; filename=%d.json'
                                     % request.context.id)
 
     return response
@@ -29,7 +29,7 @@ def image_file(request):
     fn = env.file_storage.filename(request.context.image_fileobj)
 
     response = FileResponse(fn, request=request)
-    response.content_disposition = (b'attachment; filename=%d.qml'
+    response.content_disposition = (b'attachment; filename=%d.png'
                                     % request.context.id)
 
     return response

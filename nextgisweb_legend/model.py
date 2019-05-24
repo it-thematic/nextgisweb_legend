@@ -31,12 +31,6 @@ class LegendSprite(Base, Resource):
     def check_parent(cls, parent):
         return IRenderableStyle.providedBy(parent)
 
-
-DataScope.read.require(
-    DataScope.read,
-    attr='parent', cls=LegendSprite)
-
-
 class _description_file_attr(SerializedProperty):  # NOQA
 
     def setter(self, srlzr, value):

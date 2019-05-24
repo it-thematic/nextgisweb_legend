@@ -27,5 +27,5 @@ msgstr "Файл описания"
 
 #: nextgisweb_legend\view.py:27
 msgid "Image file"
-msgstr "Файл изображений"
+msgstr "Файл изображения"
 
