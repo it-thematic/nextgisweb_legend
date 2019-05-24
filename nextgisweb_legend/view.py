@@ -20,11 +20,11 @@ def setup_pyramid(comp, config):
                 yield dm.Label('legend_sprite', _(u"Legend"))
 
                 if args.obj.description_fileobj is not None:
-                    yield dm.Link('legend_sprite/description', _('Description file'),
+                    yield dm.Link('legend_sprite/description', _(u"Description file"),
                                   lambda args: args.request.route_url('legend.description', id=args.obj.id))
 
                 if args.obj.image_fileobj is not None:
-                    yield dm.Link('legend_sprite/image', _('Image file'),
-                                  lambda args: args.request.route_url('legend.image', id=args.obj.id))
+                    yield dm.Link('legend_sprite/image', _(u"Image file"),
+                                  lambda args: args.request.route_url("legend.image", id=args.obj.id))
 
     Resource.__dynmenu__.add(StyleMenuExt())

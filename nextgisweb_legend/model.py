@@ -22,10 +22,10 @@ class LegendSprite(Base, Resource):
     __scope__ = DataScope
 
     description_fileobj_id = db.Column(db.Integer, db.ForeignKey(FileObj.id), nullable=True)
-    description_fileobj = db.relationship(FileObj, foreign_keys=[description_fileobj_id])
+    description_fileobj = db.relationship(FileObj, foreign_keys=[description_fileobj_id], cascade='all')
 
     image_fileobj_id = db.Column(db.Integer, db.ForeignKey(FileObj.id), nullable=True)
-    image_fileobj = db.relationship(FileObj, foreign_keys=[image_fileobj_id, ])
+    image_fileobj = db.relationship(FileObj, foreign_keys=[image_fileobj_id], cascade='all')
 
     @classmethod
     def check_parent(cls, parent):
