@@ -42,8 +42,8 @@ define([
 
         validateDataInMixin: function (errback) {
             var description = this.composite.operation == "create" ?
-                this.wFileUpload.upload_promise !== undefined &&
-                    this.wFileUpload.upload_promise.isResolved() : true;
+                this.dFileUpload.upload_promise !== undefined &&
+                    this.dFileUpload.upload_promise.isResolved() : true;
 
             var image = this.composite.operation == "create" ?
                 this.iFileUpload.upload_promise !== undefined &&
