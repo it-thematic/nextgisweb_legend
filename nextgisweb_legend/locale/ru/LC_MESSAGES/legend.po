@@ -1,0 +1,29 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR ORGANIZATION
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2019-05-24 11:55+RTZ 2 (зима)\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: ENCODING\n"
+"Generated-By: pygettext.py 1.5\n"
+
+
+#: nextgisweb_legend\model.py:20 nextgisweb_legend\view.py:20
+msgid "Legend"
+msgstr "Легенда"
+
+#: nextgisweb_legend\view.py:23
+msgid "Description file"
+msgstr "Файл описания"
+
+#: nextgisweb_legend\view.py:27
+msgid "Image file"
+msgstr "Файл изображений"
+
