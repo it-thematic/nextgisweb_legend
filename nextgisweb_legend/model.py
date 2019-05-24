@@ -21,11 +21,11 @@ class LegendSprite(Base, Resource):
 
     __scope__ = DataScope
 
-    description_fileobj_id = db.Column(db.ForeignKey(FileObj.id), nullable=False)
-    description_fileobj = db.relationship(FileObj, cascade='all')
+    description_fileobj_id = db.Column(db.Integer, db.ForeignKey(FileObj.id), nullable=True)
+    description_fileobj = db.relationship(FileObj, foreign_keys=[description_fileobj_id])
 
-    image_fileobj_id = db.Column(db.ForeignKey(FileObj.id), nullable=False)
-    image_fileobj = db.relationship(FileObj, cascade='all')
+    image_fileobj_id = db.Column(db.Integer, db.ForeignKey(FileObj.id), nullable=True)
+    image_fileobj = db.relationship(FileObj, foreign_keys=[image_fileobj_id, ])
 
     @classmethod
     def check_parent(cls, parent):
@@ -33,8 +33,8 @@ class LegendSprite(Base, Resource):
 
 
 DataScope.read.require(
-    DataScope.read, attr='parent', cls=LegendSprite
-)
+    DataScope.read,
+    attr='parent', cls=LegendSprite)
 
 
 class _description_file_attr(SerializedProperty):  # NOQA
