@@ -13,28 +13,11 @@ from nextgisweb.file_storage import FileObj
 from nextgisweb.models import declarative_base
 from nextgisweb.render import IRenderableStyle
 from nextgisweb.resource import DataScope, Resource, ResourceScope, Serializer, SerializedProperty, ValidationError
-from nextgisweb.resource.events import AfterResourceCollectionPost
+from nextgisweb.resource.events import AfterResourceCollectionPost, AfterResourcePut
 
 from .util import _
 
 Base = declarative_base()
-
-
-def normalize_description(desc, legend_id):
-    """
-    Фунция нормализации идентификаторов объектов
-
-    Если такого поля нет, то она его добавит. Иначе изменит существующие значение на uuid
-
-    :param dict desc:
-    :param int legend_id: идентификатор ресурса легенды
-    :return:
-    """
-    desc['id'] = str(uuid4())
-    desc['legend_id'] = legend_id
-    desc.setdefault('children', [])
-    for child in desc['children']:
-        normalize_description(child, legend_id=legend_id)
 
 
 class LegendSprite(Base, Resource):
@@ -88,12 +71,50 @@ class LegendSerializer(Serializer):
     description_file = _description_file_attr(read=None, write=ResourceScope.update)
     image_file = _image_file_attr(read=None, write=ResourceScope.update)
 
-@zope.event.classhandler.handler(AfterResourceCollectionPost)
-def on_item_post(event):
-    with open(env.file_storage.filename(event.resource.description_fileobj), 'r') as fs:
+
+def normalize_description(desc, legend_id):
+    """
+    Фунция нормализации идентификаторов объектов
+
+    Если такого поля нет, то она его добавит. Иначе изменит существующие значение на uuid
+
+    :param dict desc:
+    :param int legend_id: идентификатор ресурса легенды
+    :return:
+    """
+    desc['id'] = str(uuid4())
+    desc['legend_id'] = legend_id
+    desc.setdefault('children', [])
+    for child in desc['children']:
+        normalize_description(child, legend_id=legend_id)
+
+
+def on_normilize_resource(resource):
+    with open(env.file_storage.filename(resource.description_fileobj), 'r') as fs:
         desc = loads(fs.read(), encoding='utf-8')
     for el in desc:
-        normalize_description(el, legend_id=event.resource.id)
+        normalize_description(el, legend_id=resource.id)
 
-    with open(env.file_storage.filename(event.resource.description_fileobj), 'w') as fd:
+    with open(env.file_storage.filename(resource.description_fileobj), 'w') as fd:
         fd.write(dumps(desc))
+
+@zope.event.classhandler.handler(AfterResourceCollectionPost)
+def on_item_post(event):
+    """
+    Событие после создания ресурса
+
+    :param AfterResourceCollectionPost event:
+    :return:
+    """
+    on_normilize_resource(event.resource)
+
+
+@zope.event.classhandler.handler(AfterResourcePut)
+def on_item_post(event):
+    """
+    Событие после обновления ресурса
+
+    :param AfterResourcePut event:
+    :return:
+    """
+    on_normilize_resource(event.resource)
