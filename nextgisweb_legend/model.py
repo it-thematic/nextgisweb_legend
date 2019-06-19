@@ -5,12 +5,15 @@ from json import loads, dumps
 from shutil import copyfileobj
 from uuid import uuid4
 
+import zope.event.classhandler
+
 from nextgisweb import db
 from nextgisweb.env import env
 from nextgisweb.file_storage import FileObj
 from nextgisweb.models import declarative_base
 from nextgisweb.render import IRenderableStyle
 from nextgisweb.resource import DataScope, Resource, ResourceScope, Serializer, SerializedProperty, ValidationError
+from nextgisweb.resource.events import AfterResourceCollectionPost
 
 from .util import _
 
@@ -63,8 +66,6 @@ class _description_file_attr(SerializedProperty):  # NOQA
             desc = loads(fs.read(), encoding='utf-8')
             if not isinstance(desc, list):
                 raise ValidationError(_('Legend\'s description must be a list'))
-            for el in desc:
-                normalize_description(el, legend_id=srlzr.obj.id)
             fd.write(dumps((desc)))
 
 
@@ -86,3 +87,13 @@ class LegendSerializer(Serializer):
 
     description_file = _description_file_attr(read=None, write=ResourceScope.update)
     image_file = _image_file_attr(read=None, write=ResourceScope.update)
+
+@zope.event.classhandler.handler(AfterResourceCollectionPost)
+def on_item_post(event):
+    with open(env.file_storage.filename(event.resource.description_fileobj), 'r') as fs:
+        desc = loads(fs.read(), encoding='utf-8')
+    for el in desc:
+        normalize_description(el, legend_id=event.resource.id)
+
+    with open(env.file_storage.filename(event.resource.description_fileobj), 'w') as fd:
+        fd.write(dumps(desc))
