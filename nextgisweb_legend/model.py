@@ -106,7 +106,8 @@ def on_item_post(event):
     :param AfterResourceCollectionPost event:
     :return:
     """
-    on_normilize_resource(event.resource)
+    if event.resource.identity == LegendSprite.identity:
+        on_normilize_resource(event.resource)
 
 
 @zope.event.classhandler.handler(AfterResourcePut)
@@ -117,4 +118,5 @@ def on_item_post(event):
     :param AfterResourcePut event:
     :return:
     """
-    on_normilize_resource(event.resource)
+    if event.resource.identity == LegendSprite.identity:
+        on_normilize_resource(event.resource)
