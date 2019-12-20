@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from __future__ import print_function, absolute_import
+from __future__ import absolute_import, print_function, unicode_literals
 
 from json import loads, dumps
 from shutil import copyfileobj
@@ -89,7 +89,7 @@ def normalize_description(desc, legend_id):
         normalize_description(child, legend_id=legend_id)
 
 
-def on_normilize_resource(resource):
+def on_normalize_resource(resource):
     with open(env.file_storage.filename(resource.description_fileobj), 'r') as fs:
         desc = loads(fs.read(), encoding='utf-8')
     for el in desc:
@@ -97,6 +97,7 @@ def on_normilize_resource(resource):
 
     with open(env.file_storage.filename(resource.description_fileobj), 'w') as fd:
         fd.write(dumps(desc))
+
 
 @zope.event.classhandler.handler(AfterResourceCollectionPost)
 def on_item_post(event):
@@ -107,7 +108,7 @@ def on_item_post(event):
     :return:
     """
     if event.resource.identity == LegendSprite.identity:
-        on_normilize_resource(event.resource)
+        on_normalize_resource(event.resource)
 
 
 @zope.event.classhandler.handler(AfterResourcePut)
@@ -119,4 +120,4 @@ def on_item_post(event):
     :return:
     """
     if event.resource.identity == LegendSprite.identity:
-        on_normilize_resource(event.resource)
+        on_normalize_resource(event.resource)

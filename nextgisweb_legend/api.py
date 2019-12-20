@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-from __future__ import print_function
+from __future__ import unicode_literals, print_function, absolute_import
 
 from json import dumps, loads
-from uuid import uuid4
 
 from pyramid.response import FileResponse, Response
 from pyramid.httpexceptions import HTTPBadRequest
@@ -10,7 +9,6 @@ from pyramid.httpexceptions import HTTPBadRequest
 from nextgisweb.env import env
 from nextgisweb.resource import resource_factory, ResourceScope, Resource
 from nextgisweb.models import DBSession
-
 
 from .model import LegendSprite
 
@@ -53,8 +51,7 @@ def description_file(request):
     fn = env.file_storage.filename(request.context.description_fileobj)
 
     response = FileResponse(fn, request=request)
-    response.content_disposition = (b'attachment; filename=%d.json'
-                                    % request.context.id)
+    response.content_disposition = (b'attachment; filename=%d.json' % request.context.id)
 
     return response
 
@@ -65,8 +62,7 @@ def image_file(request):
     fn = env.file_storage.filename(request.context.image_fileobj)
 
     response = FileResponse(fn, request=request)
-    response.content_disposition = (b'attachment; filename=%d.png'
-                                    % request.context.id)
+    response.content_disposition = (b'attachment; filename=%d.png' % request.context.id)
 
     return response
 
@@ -77,11 +73,11 @@ def setup_pyramid(comp, config):
     ).add_view(legend, request_method='GET')
 
     config.add_route(
-        'legend.description', '/api/resource/{id:\d+}/legend/description',
+        'legend.description', r'/api/resource/{id:\d+}/legend/description',
         factory=resource_factory
     ).add_view(description_file, context=LegendSprite, request_method='GET')
 
     config.add_route(
-        'legend.image', '/api/resource/{id:\d+}/legend/image',
+        'legend.image', r'/api/resource/{id:\d+}/legend/image',
         factory=resource_factory
     ).add_view(image_file, context=LegendSprite, request_method='GET')
