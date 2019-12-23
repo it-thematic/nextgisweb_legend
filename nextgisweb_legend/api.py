@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals, print_function, absolute_import
+from __future__ import absolute_import, print_function, unicode_literals
 
 from json import dumps, loads
 
@@ -41,7 +41,8 @@ def legend(request):
 
     return Response(
         dumps(result),
-        content_type='application/json'
+        charset=b'UTF-8',
+        content_type=b'application/json'
     )
 
 
