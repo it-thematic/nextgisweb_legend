@@ -19,7 +19,7 @@ msgstr ""
 
 #: nextgisweb_legend\model.py:20 nextgisweb_legend\view.py:20
 msgid "Legend"
-msgstr "Легенда"
+msgstr "Условные обозначения"
 
 #: nextgisweb_legend\view.py:23
 msgid "Description file"
