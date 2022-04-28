@@ -23,7 +23,7 @@ def legend(request):
 
     result = []
 
-    legend_list = DBSession.query(Resource).filter(Resource.parent_id.in_(styles))
+    legend_list = DBSession.query(Resource).filter(Resource.parent_id.in_(styles)).order_by(Resource.parent_id, Resource.display_name)
 
     for legend in legend_list:
         legend_description = env.file_storage.filename(legend.description_fileobj)
@@ -33,7 +33,9 @@ def legend(request):
                 description = list(description)
             element = dict(
                 id=legend.id,
+                type='legend',
                 legend_id=legend.id,
+                style_id=legend.parent.id,
                 name=legend.display_name or legend.keyname,
                 children=description
             )
