@@ -6,14 +6,14 @@ define([
     "dijit/_TemplatedMixin",
     "dijit/_WidgetsInTemplateMixin",
     "dijit/layout/ContentPane",
-    "ngw-pyramid/i18n!legend",
-    "ngw-pyramid/hbs-i18n",
+    "@nextgisweb/pyramid/i18n!",
     "ngw-resource/serialize",
     // resource
     "dojo/text!./template/LegendWidget.hbs",
     // template
     "dojox/layout/TableContainer",
-    "ngw-file-upload/Uploader"], function (
+    "ngw-file-upload/Uploader"
+], function (
     declare,
     lang,
     Deferred,
@@ -22,12 +22,12 @@ define([
     _WidgetsInTemplateMixin,
     ContentPane,
     i18n,
-    hbsI18n,
     serialize,
     template
 ) {
     return declare([ContentPane, serialize.Mixin, _TemplatedMixin, _WidgetsInTemplateMixin], {
-        templateString: hbsI18n(template, i18n),
+        templateString: i18n.renderTemplate(template),
+
         title: i18n.gettext("Legend"),
         prefix: "legend_sprite",
 
