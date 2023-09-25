@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals, print_function, absolute_import
-
 from nextgisweb.component import Component, require
 
 from .model import Base

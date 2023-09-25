@@ -34,7 +34,7 @@ class LegendSprite(Base, Resource):
 
     @classmethod
     def check_parent(cls, parent):
-        return IRenderableStyle.providedBy(parent)
+        return isinstance(parent, Resource)
 
 
 class _description_file_attr(SerializedProperty):  # NOQA

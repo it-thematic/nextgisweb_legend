@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from __future__ import absolute_import, print_function, unicode_literals
 import nextgisweb.dynmenu as dm
 from nextgisweb.resource import Widget, Resource
 
@@ -14,10 +13,10 @@ class Widget(Widget):
 
 
 def setup_pyramid(comp, config):
-    class StyleMenuExt(dm.DynItem):
+    class LayerMenuExt(dm.DynItem):
         def build(self, args):
             if isinstance(args.obj, LegendSprite):
-                yield dm.Label('legend_sprite', _(u"Legend"))
+                yield dm.Label('legend_sprite', _("Legend"))
 
                 if args.obj.description_fileobj is not None:
                     yield dm.Link('legend_sprite/description', _("Description file"),
@@ -27,4 +26,4 @@ def setup_pyramid(comp, config):
                     yield dm.Link('legend_sprite/image', _("Image file"),
                                   lambda args: args.request.route_url("legend.image", id=args.obj.id))
 
-    Resource.__dynmenu__.add(StyleMenuExt())
+    Resource.__dynmenu__.add(LayerMenuExt())

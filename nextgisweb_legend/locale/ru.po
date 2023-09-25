@@ -1,31 +1,16 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR ORGANIZATION
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-msgid ""
-msgstr ""
-"Project-Id-Version: nextgisweb_legend 0.0\n"
-"POT-Creation-Date: 2019-05-24 11:55+0700\n"
-"PO-Revision-Date: 2019-05-24 11:55+0700\n\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: ru\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Generated-By: pygettext.py 1.5\n"
-
-
-#: nextgisweb_legend\model.py:20 nextgisweb_legend\view.py:20
+#: amd/ngw-legend/LegendWidget.js:31 model.py:25 view.py:20
 msgid "Legend"
 msgstr "Условные обозначения"
 
-#: nextgisweb_legend\view.py:23
+#: model.py:51
+msgid "Legend's description must be a list"
+msgstr "Описание легенды должно быть списком"
+
+#: amd/ngw-legend/template/LegendWidget.hbs:5 view.py:23
 msgid "Description file"
 msgstr "Файл описания"
 
-#: nextgisweb_legend\view.py:27
+#: amd/ngw-legend/template/LegendWidget.hbs:11 view.py:27
 msgid "Image file"
 msgstr "Файл изображения"
 

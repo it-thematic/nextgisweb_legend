@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-from __future__ import absolute_import, print_function, unicode_literals
-
 from json import dumps, loads
 
+from sqlalchemy.sql import or_, and_
 from pyramid.response import FileResponse, Response
 from pyramid.httpexceptions import HTTPBadRequest
 
@@ -14,16 +13,23 @@ from .model import LegendSprite
 
 
 def legend(request):
-    if 'styles' not in request.GET.keys():
-        raise HTTPBadRequest("Parameter 'styles' not found.")
-    try:
-        styles = map(int, request.GET.getall('styles'))
-    except ValueError:
-        raise HTTPBadRequest("Invalid 'styles' parameter. Only numbers.")
 
+    styles = request.json.get("styles", [])
+    legend_ids = request.json.get('legends', [])
     result = []
 
-    legend_list = DBSession.query(Resource).filter(Resource.parent_id.in_(styles)).order_by(Resource.parent_id, Resource.display_name)
+    # style_legend_list = DBSession.query(Resource).filter()
+    legend_list = DBSession\
+        .query(Resource)\
+        .filter(
+            or_(
+                and_(
+                    Resource.id.in_(legend_ids),
+                    Resource.cls == 'legend_sprite'
+                ),
+                Resource.parent_id.in_(styles)
+            )
+    )
 
     for legend in legend_list:
         legend_description = env.file_storage.filename(legend.description_fileobj)
@@ -40,7 +46,6 @@ def legend(request):
                 children=description
             )
             result.append(element)
-
     return Response(dumps(result), content_type='application/json', charset='utf-8')
 
 
@@ -69,7 +74,7 @@ def image_file(request):
 def setup_pyramid(comp, config):
     config.add_route(
         'legend.legend', '/api/resource/legend',
-    ).add_view(legend, request_method='GET')
+    ).add_view(legend, request_method='POST')
 
     config.add_route(
         'legend.description', r'/api/resource/{id:\d+}/legend/description',
