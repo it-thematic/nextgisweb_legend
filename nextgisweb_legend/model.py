@@ -1,23 +1,25 @@
-# -*- coding: utf-8 -*-
-from __future__ import absolute_import, print_function, unicode_literals
-
 from json import loads, dumps
 from shutil import copyfileobj
 from uuid import uuid4
 
 import zope.event.classhandler
 
-from nextgisweb import db
-from nextgisweb.env import env
+from nextgisweb.env import Base, _, env
+from nextgisweb.lib import db
 from nextgisweb.file_storage import FileObj
-from nextgisweb.models import declarative_base
-from nextgisweb.render import IRenderableStyle
-from nextgisweb.resource import DataScope, Resource, ResourceScope, Serializer, SerializedProperty, ValidationError
-from nextgisweb.resource.events import AfterResourceCollectionPost, AfterResourcePut
 
-from .util import _
-
-Base = declarative_base()
+from nextgisweb.resource import (
+    DataScope,
+    Resource,
+    ResourceScope,
+    Serializer,
+    SerializedProperty,
+    ValidationError,
+)
+from nextgisweb.resource.events import (
+    AfterResourceCollectionPost,
+    AfterResourcePut,
+)
 
 
 class LegendSprite(Base, Resource):
@@ -64,7 +66,7 @@ class _image_file_attr(SerializedProperty):  # NOQA
             copyfileobj(fs, fd)
 
 
-class LegendSerializer(Serializer):
+class LegendSpriteSerializer(Serializer):
     identity = LegendSprite.identity
     resclass = LegendSprite
 

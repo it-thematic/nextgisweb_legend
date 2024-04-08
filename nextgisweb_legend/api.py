@@ -3,24 +3,20 @@ from json import dumps, loads
 
 from sqlalchemy.sql import or_, and_
 from pyramid.response import FileResponse, Response
-from pyramid.httpexceptions import HTTPBadRequest
 
-from nextgisweb.env import env
+from nextgisweb.env import DBSession, env
 from nextgisweb.resource import resource_factory, ResourceScope, Resource
-from nextgisweb.models import DBSession
 
 from .model import LegendSprite
 
 
 def legend(request):
-
     styles = request.json.get("styles", [])
     legend_ids = request.json.get('legends', [])
     result = []
 
-    # style_legend_list = DBSession.query(Resource).filter()
-    legend_list = DBSession\
-        .query(Resource)\
+    legend_list = DBSession \
+        .query(Resource) \
         .filter(
             or_(
                 and_(
@@ -29,20 +25,20 @@ def legend(request):
                 ),
                 Resource.parent_id.in_(styles)
             )
-    )
+        )
 
-    for legend in legend_list:
-        legend_description = env.file_storage.filename(legend.description_fileobj)
+    for legend_inst in legend_list:
+        legend_description = env.file_storage.filename(legend_inst.description_fileobj)
         with open(legend_description, mode='r') as f:
             description = loads(f.read(), encoding='utf-8')
             if type(description) != list:
                 description = list(description)
             element = dict(
-                id=legend.id,
+                id=legend_inst.id,
                 type='legend',
-                legend_id=legend.id,
-                style_id=legend.parent.id,
-                name=legend.display_name or legend.keyname,
+                legend_id=legend_inst.id,
+                style_id=legend_inst.parent.id,
+                name=legend_inst.display_name or legend_inst.keyname,
                 children=description
             )
             result.append(element)
@@ -72,9 +68,12 @@ def image_file(request):
 
 
 def setup_pyramid(comp, config):
-    config.add_route(
-        'legend.legend', '/api/resource/legend',
-    ).add_view(legend, request_method='POST')
+    route = config.add_route(
+        'legend.legend',
+        '/api/resource/legend',
+        factory=resource_factory
+    )
+    route.add_view(legend, request_method='POST')
 
     config.add_route(
         'legend.description', r'/api/resource/{id:\d+}/legend/description',

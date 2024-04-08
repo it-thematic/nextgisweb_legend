@@ -1,9 +1,8 @@
-# -*- coding: utf-8 -*-
-import nextgisweb.dynmenu as dm
+from nextgisweb.env import _
+from nextgisweb.lib import dynmenu as dm
 from nextgisweb.resource import Widget, Resource
 
 from .model import LegendSprite
-from .util import _
 
 
 class Widget(Widget):
