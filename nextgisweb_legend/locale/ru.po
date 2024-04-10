@@ -1,16 +1,33 @@
-#: amd/ngw-legend/LegendWidget.js:31 model.py:25 view.py:20
+#: amd/ngw-legend/LegendWidget.js:37 model.py:27
+#: nodepkg/editor-widget/EditorWidget.tsx:27 view.py:18
 msgid "Legend"
 msgstr "Условные обозначения"
 
-#: model.py:51
-msgid "Legend's description must be a list"
-msgstr "Описание легенды должно быть списком"
-
-#: amd/ngw-legend/template/LegendWidget.hbs:5 view.py:23
+#: amd/ngw-legend/template/LegendWidget.hbs:5 view.py:21
 msgid "Description file"
 msgstr "Файл описания"
 
-#: amd/ngw-legend/template/LegendWidget.hbs:11 view.py:27
+#: amd/ngw-legend/template/LegendWidget.hbs:10 view.py:25
 msgid "Image file"
 msgstr "Файл изображения"
+
+#: model.py:53
+msgid "Legend's description must be a list"
+msgstr "Описание легенды должно быть списком"
+
+#: nodepkg/editor-widget/component/FileLegendComponent.tsx:9
+msgid "Select a legend description"
+msgstr "Выберите файл-описание легенды"
+
+#: nodepkg/editor-widget/component/FileLegendComponent.tsx:10
+msgid "Only JSON format is supported."
+msgstr "Поддерживается только формат JSON"
+
+#: nodepkg/editor-widget/component/FileLegendComponent.tsx:12
+msgid "Select a legend image"
+msgstr "Выберите файл-изображение легенды"
+
+#: nodepkg/editor-widget/component/FileLegendComponent.tsx:13
+msgid "Only PNG format is supported."
+msgstr "Поддерживается только формат PNG"
 

@@ -12,11 +12,6 @@ entry_points = {
     'nextgisweb.packages': [
         'nextgisweb_legend = nextgisweb:single_component',
     ],
-
-    'nextgisweb.amd_packages': [
-        'nextgisweb_legend = nextgisweb_legend:amd_packages',
-    ],
-
 }
 
 setup(

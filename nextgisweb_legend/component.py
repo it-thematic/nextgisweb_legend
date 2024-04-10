@@ -1,4 +1,4 @@
-from nextgisweb.env import Component, require
+from nextgisweb.env import Component
 
 
 class LegendComponent(Component):

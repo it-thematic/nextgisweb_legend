@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from json import dumps, loads
 
 from sqlalchemy.sql import or_, and_
